@@ -1,6 +1,7 @@
 
 import 'package:cafeapp/src/theme/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PinCodeScreen extends StatefulWidget {
   final int length;
@@ -46,17 +47,17 @@ class _PinCodeScreenState extends State<PinCodeScreen> {
       children: List.generate(widget.length, (i) {
         final filled = i < _pin.length;
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          padding:  EdgeInsets.symmetric(horizontal: 8.r),
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 150),
-            width: filled ? 18 : 14,
-            height: filled ? 18 : 14,
+            width: filled ? 18.sp : 14.sp,
+            height: filled ? 18.sp : 14.sp,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: filled ? Theme.of(context).primaryColor : Colors.transparent,
               border: Border.all(
                 color: filled ? Theme.of(context).primaryColor : Colors.grey.shade400,
-                width: 1.5,
+                width: 1.5.sp,
               ),
             ),
           ),
@@ -70,13 +71,13 @@ class _PinCodeScreenState extends State<PinCodeScreen> {
       onTap: onPressed,
       child: Container(
         alignment: Alignment.center,
-        height: 72,
-        width: 72,
+        height: 72.sp,
+        width: 72.sp,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(15.r),
           border: Border.all(color: Colors.grey.shade300),
         ),
-        child: child ?? Text(label, style: const TextStyle(fontSize: 24)),
+        child: child ?? Text(label, style:  TextStyle(fontSize: 24.sp)),
       ),
     );
   }
@@ -93,12 +94,12 @@ class _PinCodeScreenState extends State<PinCodeScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const SizedBox(height: 24),
+            SizedBox(height: 24.sp),
             Column(
               children: [
                 Container(
-                  width: 120,
-                  height: 120,
+                  width: 120.sp,
+                  height: 120.sp,
                   decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
@@ -108,30 +109,30 @@ class _PinCodeScreenState extends State<PinCodeScreen> {
                         )
                       ],
                       color: AppColors.background,
-                      borderRadius: BorderRadius.circular(10)
+                      borderRadius: BorderRadius.circular(10.r)
                   ),
                 ),
-                const SizedBox(height: 18),
+                SizedBox(height: 18.sp),
                 Text('Parol kiriting', style: Theme.of(context).textTheme.bodyLarge),
-                const SizedBox(height: 16),
+                SizedBox(height: 16.sp),
                 _buildPinDots(),
-                const SizedBox(height: 8),
+                SizedBox(height: 8.sp),
                 if (_pin.isNotEmpty)
-                  Text('$_pin', style: const TextStyle(fontSize: 12, color: Colors.transparent)),
+                  Text('$_pin', style:  TextStyle(fontSize: 12.sp, color: Colors.transparent)),
               ],
             ),
 
             // Numpad
             Padding(
-              padding: const EdgeInsets.only(bottom: 24.0),
+              padding:  EdgeInsets.only(bottom: 24.0.sp),
               child: Column(
                 children: [
                   _buildNumberRow(['1', '2', '3']),
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12.sp),
                   _buildNumberRow(['4', '5', '6']),
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12.sp),
                   _buildNumberRow(['7', '8', '9']),
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12.sp),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -139,8 +140,8 @@ class _PinCodeScreenState extends State<PinCodeScreen> {
                       GestureDetector(
                         onLongPress: _clearAll,
                         child: Container(
-                          height: 72,
-                          width: 72,
+                          height: 72.sp,
+                          width: 72.sp,
                           alignment: Alignment.center,
                           child: const Text(''),
                         ),
@@ -150,8 +151,8 @@ class _PinCodeScreenState extends State<PinCodeScreen> {
                         onTap: _deleteDigit,
                         onLongPress: _clearAll,
                         child: Container(
-                          height: 72,
-                          width: 72,
+                          height: 72.sp,
+                          width: 72.sp,
                           alignment: Alignment.center,
                           child: const Icon(Icons.backspace_outlined),
                         ),
