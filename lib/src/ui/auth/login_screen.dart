@@ -48,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Text("Kitchen",style: AppStyle.font800(AppColors.white),),
                     SizedBox(height: 106.sp,),
                     TextField(
-                      style: AppStyle.font500(AppColors.black),
+                      style: AppStyle.font500(AppColors.white),
                       controller: controllerUsername,
                       decoration: InputDecoration(
                           prefixIcon: Icon(Icons.person,color: AppColors.buttonColor,),
@@ -63,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     SizedBox(height: 16.sp,),
                     TextField(
-                      style: AppStyle.font500(AppColors.black),
+                      style: AppStyle.font500(AppColors.white),
                       keyboardType: TextInputType.number,
                       controller: controllerPassword,
                       decoration: InputDecoration(

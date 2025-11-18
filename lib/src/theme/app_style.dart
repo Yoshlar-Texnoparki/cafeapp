@@ -24,6 +24,13 @@ class AppStyle{
       fontWeight: FontWeight.w400,
     );
   }
+  static TextStyle font400Bold(Color color){
+    return GoogleFonts.inter(
+      color: color,
+      fontSize: 12.spMin,
+      fontWeight: FontWeight.w700,
+    );
+  }
   static TextStyle font600(Color color){
     return GoogleFonts.inter(
       color: color,
