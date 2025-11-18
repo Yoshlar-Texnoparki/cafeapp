@@ -20,12 +20,12 @@ class ButtonWidget extends StatelessWidget {
         margin: EdgeInsets.only(left: 16.spMin,right: 16.spMin,bottom: 32.spMin),
         alignment: Alignment.center,
         width: MediaQuery.of(context).size.width,
-        height: 56.spMin,
+        height: 58.spMin,
         decoration: BoxDecoration(
           color: backgroundColor,
-          borderRadius: BorderRadius.circular(10.spMin),
+          borderRadius: BorderRadius.circular(20.spMin),
         ),
-        child: isLoad ? CircularProgressIndicator(color: AppColors.white,) : Text(text,style: AppStyle.font500(textColor),),
+        child: isLoad ? CircularProgressIndicator(color: AppColors.white,) : Text(text,style: AppStyle.font600(textColor),),
       ),
     );
   }

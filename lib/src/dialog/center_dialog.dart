@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_style.dart';
 
@@ -7,9 +8,15 @@ class CenterDialog{
   static showCenterDialog(BuildContext ctx,String content){
     showDialog(context: ctx, builder: (ctx){
       return AlertDialog(
-        backgroundColor: AppColors.white,
-        title: Center(child: Text("Xatolik",style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold))),
-        content: Text(content,style: AppStyle.font500(AppColors.grey),textAlign: TextAlign.center,),
+        backgroundColor: AppColors.inputColor,
+        title: Center(child: Column(
+          children: [
+            Icon(Icons.error_outline,size: 54.sp,color: Colors.red,),
+            SizedBox(height: 8,),
+            Text("Xatolik",style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold)),
+          ],
+        )),
+        content: Text(content,style: AppStyle.font500(AppColors.white),textAlign: TextAlign.center,),
       );
     });
   }
@@ -62,6 +69,27 @@ class CenterDialog{
         );
       },
     );
+  }
+
+  static showLoadingDialog(BuildContext context){
+    return showDialog(context: context, builder: (builder){
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            width: 80.sp,
+            height: 80.sp,
+            decoration: BoxDecoration(
+                color: AppColors.inputColor,
+                borderRadius: BorderRadius.circular(20)
+            ),child: CircularProgressIndicator.adaptive(
+            backgroundColor: AppColors.buttonColor,
+          ),
+          ),
+        ],
+      );
+    });
   }
 
 
