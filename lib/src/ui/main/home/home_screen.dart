@@ -4,6 +4,7 @@ import 'package:cafeapp/src/theme/app_style.dart';
 import 'package:cafeapp/src/ui/food/foods_screen.dart';
 import 'package:cafeapp/src/ui/main/home/room/room_screen.dart';
 import 'package:cafeapp/src/widget/button_widget.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -41,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                 color: AppColors.background,
                 borderRadius: BorderRadius.circular(20)
               ),
-                child: Text("1 560 000 so'm", style: AppStyle.font800(AppColors.green))),
+                child: Text("1 500 000 "+'home.text1'.tr(), style: AppStyle.font800(AppColors.green))),
           ],
         ),
         shape: OutlineInputBorder(
@@ -82,13 +83,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                               height: 70,
                               color: Colors.white,
                             ),
-                            Text("Stol${index + 1}",
+                            Text("Stol ${index + 1}".tr(),
                                 style: AppStyle.font600(AppColors.white)),
                             Container(
                               margin: EdgeInsets.only(top: 12.sp),
                               padding: EdgeInsets.all(4),
                               child: Text(
-                                "560 000 so'm",
+                                "560 000 "+"home.text1".tr(),
                                 style: AppStyle.font400Bold(AppColors.green),
                               ),
                             ),
@@ -127,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                                   margin: EdgeInsets.only(top: 12.sp),
                                   padding: EdgeInsets.all(4),
                                   child: Text(
-                                    "560 000 so'm",
+                                    "560 000 "+"home.text1".tr(),
                                     style: AppStyle.font400Bold(AppColors.green),
                                   ),
                                 ),
@@ -166,7 +167,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                                   margin: EdgeInsets.only(top: 12.sp),
                                   padding: EdgeInsets.all(4),
                                   child: Text(
-                                    "560 000 so'm",
+                                    "560 000 "+"home.text1".tr(),
                                     style: AppStyle.font400Bold(AppColors.green),
                                   ),
                                 ),
@@ -205,7 +206,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                                   margin: EdgeInsets.only(top: 12.sp),
                                   padding: EdgeInsets.all(4),
                                   child: Text(
-                                    "560 000 so'm",
+                                    "560 000 "+"home.text1".tr(),
                                     style: AppStyle.font400Bold(AppColors.green),
                                   ),
                                 ),
@@ -218,7 +219,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
               ]),
             ),
           ),
-          ButtonWidget(text: "Yangi buyurtma", textColor: AppColors.white, backgroundColor: AppColors.buttonColor, onTap: (){})
+          ButtonWidget(text: "home.text2".tr(), textColor: AppColors.white, backgroundColor: AppColors.buttonColor, onTap: (){})
         ],
       ),
 
@@ -243,11 +244,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
           dividerColor: Colors.transparent,
           unselectedLabelColor: AppColors.grey,
           controller: _tabController,
-          tabs: const [
-            Text("Stollar"),
-            Text("Xonalar"),
-            Text("Zallar"),
-            Text("Sorilar"),
+          tabs:  [
+            Text("home.text3".tr()),
+            Text("home.text4".tr()),
+            Text("home.text5".tr()),
+            Text("home.text6".tr()),
           ],
         ),
       ),

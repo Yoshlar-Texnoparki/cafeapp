@@ -1,0 +1,21 @@
+{
+  "login": {
+    "text1": "Kitchen",
+    "text2": "Username",
+    "text3": "Phone number",
+    "text4": "Login"
+  },
+  "main": {
+    "text1": "Home",
+    "text2": "Meals",
+    "text3": "Checks"
+  },
+  "home": {
+    "text1": "sum",
+    "text2": "New order",
+    "text3": "Tables",
+    "text4": "Rooms",
+    "text5": "Halls",
+    "text6": "Salaries"
+  }
+}

@@ -1,5 +1,6 @@
 import 'package:cafeapp/src/theme/app_colors.dart';
 import 'package:cafeapp/src/ui/main/home/home_screen.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
@@ -34,9 +35,9 @@ class _MainScreenState extends State<MainScreen> {
           },
           backgroundColor: AppColors.inputColor,
             items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home),label: 'Asosiy'),
-          BottomNavigationBarItem(icon: Icon(Icons.cookie),label: 'Taomlar'),
-          BottomNavigationBarItem(icon: Icon(Icons.receipt),label: 'Cheklar'),
+          BottomNavigationBarItem(icon: Icon(Icons.home),label: 'main.text1'.tr()),
+          BottomNavigationBarItem(icon: Icon(Icons.cookie),label: 'main.text2'.tr()),
+          BottomNavigationBarItem(icon: Icon(Icons.receipt),label: 'main.text3'.tr()),
         ]),
       ),
     );

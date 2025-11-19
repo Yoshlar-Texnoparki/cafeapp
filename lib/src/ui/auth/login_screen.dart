@@ -4,6 +4,7 @@ import 'package:cafeapp/src/theme/app_colors.dart';
 import 'package:cafeapp/src/theme/app_style.dart';
 import 'package:cafeapp/src/utils/cache.dart';
 import 'package:cafeapp/src/widget/button_widget.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -45,14 +46,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     SizedBox(height: 16.sp,),
-                    Text("Kitchen",style: AppStyle.font800(AppColors.white),),
+                    Text("login.text1".tr(),style: AppStyle.font800(AppColors.white),),
                     SizedBox(height: 106.sp,),
                     TextField(
                       style: AppStyle.font500(AppColors.white),
                       controller: controllerUsername,
                       decoration: InputDecoration(
                           prefixIcon: Icon(Icons.person,color: AppColors.buttonColor,),
-                          hintText: "Foydalanuvchi nomi",
+                          hintText: "login.text2".tr(),
                           hintStyle: TextStyle(color: AppColors.grey),
                           filled: true,
                           border: OutlineInputBorder(
@@ -68,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       controller: controllerPassword,
                       decoration: InputDecoration(
                           prefixIcon: Icon(Icons.call,color: AppColors.buttonColor,),
-                          hintText: "Telefon raqami",
+                          hintText: "login.text3".tr(),
                           hintStyle: TextStyle(color: AppColors.grey),
                           filled: true,
                           border: OutlineInputBorder(
@@ -82,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
-            ButtonWidget(text: "Kirish", textColor: AppColors.white, backgroundColor: AppColors.buttonColor, onTap: ()async{
+            ButtonWidget(text: "login.text4".tr(), textColor: AppColors.white, backgroundColor: AppColors.buttonColor, onTap: ()async{
               if(isCheckController()){
                 CenterDialog.showLoadingDialog(context);
                 Map data =

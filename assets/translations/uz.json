@@ -1,0 +1,21 @@
+{
+  "login" : {
+    "text1" : "Kitchen",
+    "text2" : "Foydalanuvchi nomi",
+    "text3" : "Telefon raqami",
+    "text4" : "Kirish"
+  },
+  "main" : {
+    "text1" : "Asosiy",
+    "text2" : "Taomlar",
+    "text3" : "Cheklar"
+  },
+  "home" : {
+    "text1" : "so'm",
+    "text2" : "Yangi buyurtma",
+    "text3" : "Stollar",
+    "text4" : "Xonalar",
+    "text5" : "Zallar",
+    "text6" : "Sorilar"
+  }
+}
