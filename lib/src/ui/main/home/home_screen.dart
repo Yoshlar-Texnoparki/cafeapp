@@ -1,5 +1,9 @@
+import 'package:cafeapp/src/dialog/bottom_dialog.dart';
 import 'package:cafeapp/src/theme/app_colors.dart';
 import 'package:cafeapp/src/theme/app_style.dart';
+import 'package:cafeapp/src/ui/food/foods_screen.dart';
+import 'package:cafeapp/src/ui/main/home/room/room_screen.dart';
+import 'package:cafeapp/src/widget/button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -15,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
 
   @override
   void initState() {
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 4, vsync: this);
     super.initState();
   }
 
@@ -27,78 +31,198 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
         surfaceTintColor: Colors.transparent,
         elevation: 0,
         backgroundColor: AppColors.inputColor,
-        title: Text("1 560 000 so'm", style: AppStyle.font800(AppColors.white)),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text("Muhammad ali",style: AppStyle.font600(AppColors.white),),
+            Container(
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: AppColors.background,
+                borderRadius: BorderRadius.circular(20)
+              ),
+                child: Text("1 560 000 so'm", style: AppStyle.font800(AppColors.green))),
+          ],
+        ),
         shape: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),
         ),
       ),
 
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: GridView.builder(
-          itemCount: 8 + 1, // <<<<<<<< BU YERGA +1 QO‘SHILDI
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            crossAxisSpacing: 12.w,
-            mainAxisSpacing: 12.h,
-            childAspectRatio: 0.85,
-          ),
-          itemBuilder: (context, index) {
-            if (index == 8) {
-              return GestureDetector(
-                onTap: () {
-                },
-                child: Container(
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: AppColors.inputColor.withOpacity(0.8),
+      body: Column(
+        children: [
+          Expanded(
+            child: Padding(
+              padding:  EdgeInsets.only(left: 8.sp,right: 8.sp,top: 94.sp),
+              child: TabBarView(
+                controller: _tabController,
+                  children: [
+                    GridView.builder(
+                  itemCount: 8 + 1,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 12.w,
+                    mainAxisSpacing: 12.h,
+                    childAspectRatio: 0.85,
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.add_circle, size: 36, color: AppColors.buttonColor),
-                      SizedBox(height: 8),
-                      Text(
-                        "Buyurtma qo‘shish",
-                        style: AppStyle.font600(AppColors.white),
-                        textAlign: TextAlign.center,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: (){
+                        BottomDialog.showBottomOrderDialog(context);
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: AppColors.inputColor,
+                        ),
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 70,
+                              color: Colors.white,
+                            ),
+                            Text("Stol${index + 1}",
+                                style: AppStyle.font600(AppColors.white)),
+                            Container(
+                              margin: EdgeInsets.only(top: 12.sp),
+                              padding: EdgeInsets.all(4),
+                              child: Text(
+                                "560 000 so'm",
+                                style: AppStyle.font400Bold(AppColors.green),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ],
-                  ),
+                    );
+                  },
                 ),
-              );
-            }
-            /// -----------------------------------------------------
-
-            return Container(
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: AppColors.inputColor,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Stol${index + 1}",
-                      style: AppStyle.font600(AppColors.white)),
-                  Container(
-                    margin: EdgeInsets.only(top: 12.sp),
-                    padding: EdgeInsets.all(4),
-                    child: Text(
-                      "560 000 so'm",
-                      style: AppStyle.font400Bold(AppColors.green),
+                    GridView.builder(
+                      itemCount: 8 + 1,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 12.w,
+                        mainAxisSpacing: 12.h,
+                        childAspectRatio: 0.85,
+                      ),
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: (){
+                            BottomDialog.showBottomOrderDialog(context);
+                          },
+                          child: Container(
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: AppColors.inputColor,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text("Stol${index + 1}",
+                                    style: AppStyle.font600(AppColors.white)),
+                                Container(
+                                  margin: EdgeInsets.only(top: 12.sp),
+                                  padding: EdgeInsets.all(4),
+                                  child: Text(
+                                    "560 000 so'm",
+                                    style: AppStyle.font400Bold(AppColors.green),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
                     ),
-                  ),
-                ],
-              ),
-            );
-          },
-        ),
+                    GridView.builder(
+                      itemCount: 8 + 1,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 12.w,
+                        mainAxisSpacing: 12.h,
+                        childAspectRatio: 0.85,
+                      ),
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: (){
+                            BottomDialog.showBottomOrderDialog(context);
+                          },
+                          child: Container(
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: AppColors.inputColor,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text("Stol${index + 1}",
+                                    style: AppStyle.font600(AppColors.white)),
+                                Container(
+                                  margin: EdgeInsets.only(top: 12.sp),
+                                  padding: EdgeInsets.all(4),
+                                  child: Text(
+                                    "560 000 so'm",
+                                    style: AppStyle.font400Bold(AppColors.green),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                    GridView.builder(
+                      itemCount: 8 + 1,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 12.w,
+                        mainAxisSpacing: 12.h,
+                        childAspectRatio: 0.85,
+                      ),
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: (){
+                            BottomDialog.showBottomOrderDialog(context);
+                          },
+                          child: Container(
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: AppColors.inputColor,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text("Stol${index + 1}",
+                                    style: AppStyle.font600(AppColors.white)),
+                                Container(
+                                  margin: EdgeInsets.only(top: 12.sp),
+                                  padding: EdgeInsets.all(4),
+                                  child: Text(
+                                    "560 000 so'm",
+                                    style: AppStyle.font400Bold(AppColors.green),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+              ]),
+            ),
+          ),
+          ButtonWidget(text: "Yangi buyurtma", textColor: AppColors.white, backgroundColor: AppColors.buttonColor, onTap: (){})
+        ],
       ),
 
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerTop,
       floatingActionButton: Container(
         padding: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
         height: 60.spMin,
@@ -106,19 +230,24 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
             border: Border.all(color: AppColors.grey.withOpacity(0.3)),
             borderRadius: BorderRadius.circular(25),
             color: AppColors.inputColor),
-        margin: EdgeInsets.symmetric(horizontal: 26.sp),
-        child: TabBar(
+        margin: EdgeInsets.only(left: 16.sp,right: 16.sp,top: 84.sp),
+        child: TabBar.secondary(
+          isScrollable: true,
+          tabAlignment: TabAlignment.start,
+          labelPadding: EdgeInsets.symmetric(vertical: 16.sp,horizontal: 42),
           indicatorSize: TabBarIndicatorSize.tab,
           indicator: BoxDecoration(
             color: AppColors.buttonColor,
-            borderRadius: BorderRadius.circular(25),
+            borderRadius: BorderRadius.circular(20),
           ),
           dividerColor: Colors.transparent,
           unselectedLabelColor: AppColors.grey,
           controller: _tabController,
           tabs: const [
-            Text("Aktiv Joylar"),
-            Text("Bo‘sh Joylar"),
+            Text("Stollar"),
+            Text("Xonalar"),
+            Text("Zallar"),
+            Text("Sorilar"),
           ],
         ),
       ),
