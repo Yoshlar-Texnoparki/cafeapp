@@ -12,27 +12,27 @@ class ApiProvider{
   Duration durationTimeout = const Duration(seconds: 30);
   String baseUrl = "https://cafe.geeks-soft.uz/";
 
-  getReqHeader() {
+  _getReqHeader() {
     String token = CacheService.getToken();
     if (token == "") {
       return {
-        "Accept": "application/json",
+        "Content-Type": "application/json",
       };
     } else {
       return {
-        "Accept": "application/json",
+        "Content-Type": "application/json",
         "Authorization": "Bearer $token",
       };
     }
   }
 
-  Future<HttpResult> postRequest(url, body) async {
+  Future<HttpResult> _postRequest(url, body) async {
     if (kDebugMode) {
       print(url);
       print(body);
     }
 
-    final dynamic headers = await getReqHeader();
+    final dynamic headers = await _getReqHeader();
     try {
       http.Response response = await http
           .post(
@@ -41,7 +41,7 @@ class ApiProvider{
         body: body,
       )
           .timeout(durationTimeout);
-      return result(response);
+      return _result(response);
     } on TimeoutException catch (_) {
       return HttpResult(
         isSuccess: false,
@@ -56,13 +56,43 @@ class ApiProvider{
       );
     }
   }
-  Future<HttpResult> patchRequest(url, body) async {
+  Future<HttpResult> _putRequest(url, body) async {
     if (kDebugMode) {
       print(url);
       print(body);
     }
 
-    final dynamic headers = await getReqHeader();
+    final dynamic headers = await _getReqHeader();
+    try {
+      http.Response response = await http
+          .put(
+        Uri.parse(url),
+        headers: headers,
+        body: body,
+      )
+          .timeout(durationTimeout);
+      return _result(response);
+    } on TimeoutException catch (_) {
+      return HttpResult(
+        isSuccess: false,
+        status: -1,
+        result: null,
+      );
+    } on SocketException catch (_) {
+      return HttpResult(
+        isSuccess: false,
+        status: -1,
+        result: null,
+      );
+    }
+  }
+  Future<HttpResult> _patchRequest(url, body) async {
+    if (kDebugMode) {
+      print(url);
+      print(body);
+    }
+
+    final dynamic headers = await _getReqHeader();
     try {
       http.Response response = await http
           .patch(
@@ -71,7 +101,7 @@ class ApiProvider{
         body: body,
       )
           .timeout(durationTimeout);
-      return result(response);
+      return _result(response);
     } on TimeoutException catch (_) {
       return HttpResult(
         isSuccess: false,
@@ -88,8 +118,8 @@ class ApiProvider{
   }
 
 
-  Future<HttpResult> getRequest(String url) async {
-    final headers = await getReqHeader();
+  Future<HttpResult> _getRequest(String url) async {
+    final headers = await _getReqHeader();
 
     if (kDebugMode) {
       print("🔹 REQUEST URL: $url");
@@ -106,7 +136,7 @@ class ApiProvider{
         bool refreshed = await _refreshToken();
 
         if (refreshed) {
-          final newHeaders = await getReqHeader();
+          final newHeaders = await _getReqHeader();
           response = await http
               .get(Uri.parse(url), headers: newHeaders)
               .timeout(durationTimeout);
@@ -114,14 +144,14 @@ class ApiProvider{
           print("❌ Token yangilash muvaffaqiyatsiz bo‘ldi.");
         }
       }
-      return result(response);
+      return _result(response);
     } on TimeoutException catch (_) {
       return HttpResult(isSuccess: false, status: -1, result: "Timeout");
     } on SocketException catch (_) {
       return HttpResult(isSuccess: false, status: -1, result: "No Internet");
     }
   }
-  HttpResult result(http.Response response) {
+  HttpResult _result(http.Response response) {
     if (kDebugMode) {
       print(response.body);
     }
@@ -187,9 +217,49 @@ class ApiProvider{
     } catch (_) {}
     return false;
   }
-
-  Future<HttpResult> login(Map data)async{
+  Future<HttpResult> login(data)async{
     String url = "${baseUrl}auth/access";
-    return await postRequest(url, data);
+    return await _postRequest(url, json.encode(data));
+  }
+
+  Future<HttpResult> account()async{
+    String url = "${baseUrl}auth/me";
+    return await _getRequest(url,);
+  }
+  Future<HttpResult> hallCategory()async{
+    String url = "${baseUrl}api/halls/";
+    return await _getRequest(url,);
+  }
+  Future<HttpResult> places()async{
+    String url = "${baseUrl}api/places/";
+    return await _getRequest(url,);
+  }
+  Future<HttpResult> allFoods()async{
+    String url = "${baseUrl}api/foods/";
+    return await _getRequest(url,);
+  }
+  Future<HttpResult> foodDetail(int id)async{
+    String url = "${baseUrl}api/foods/$id";
+    return await _getRequest(url,);
+  }
+  Future<HttpResult> allCategories()async{
+    String url = "${baseUrl}api/categories/";
+    return await _getRequest(url,);
+  }
+  Future<HttpResult> categoriesId(int id)async{
+    String url = "${baseUrl}api/categories/$id";
+    return await _getRequest(url,);
+  }
+  Future<HttpResult> addOrder(data)async{
+    String url = "${baseUrl}api/orders/";
+    return await _postRequest(url,data);
+  }
+  Future<HttpResult> getAOrderId(int id)async{
+    String url = "${baseUrl}api/orders/$id";
+    return await _getRequest(url);
+  }
+  Future<HttpResult> updateOrder(data)async{
+    String url = "${baseUrl}api/orders/";
+    return await _putRequest(url,data);
   }
 }

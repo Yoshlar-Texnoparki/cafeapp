@@ -2,6 +2,7 @@ import 'package:cafeapp/src/api/repository.dart';
 import 'package:cafeapp/src/model/http_result.dart';
 import 'package:cafeapp/src/theme/app_colors.dart';
 import 'package:cafeapp/src/theme/app_style.dart';
+import 'package:cafeapp/src/ui/main/main_screen.dart';
 import 'package:cafeapp/src/utils/cache.dart';
 import 'package:cafeapp/src/widget/button_widget.dart';
 import 'package:flutter/material.dart';
@@ -93,8 +94,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 HttpResult res = await _repository.login(data);
                 if(res.status>= 200 && res.status <299){
                   CacheService.saveToken(res.result["access_token"]);
+                  Navigator.popUntil(context, (predicate) => predicate.isFirst);
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (builder){
+                    return MainScreen();
+                  }));
                 }else{
-                  CenterDialog.showCenterDialog(context, res.result);
+                  Navigator.pop(context);
+                  CenterDialog.showCenterDialog(context, res.result.toString());
                 }
               }else{
                 CenterDialog.showCenterDialog(context, "Iltimos ko'rsatilgan maydonni to'liring");
