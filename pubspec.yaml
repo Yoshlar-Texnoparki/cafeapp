@@ -39,6 +39,7 @@ dependencies:
   flutter_screenutil: ^5.9.3
   google_fonts: ^6.3.2
   rxdart: ^0.28.0
+  flutter_slidable: ^4.0.3
 
 dev_dependencies:
   flutter_test:

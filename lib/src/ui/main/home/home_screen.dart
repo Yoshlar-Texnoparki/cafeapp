@@ -4,7 +4,8 @@ import 'package:cafeapp/src/dialog/bottom_dialog.dart';
 import 'package:cafeapp/src/theme/app_colors.dart';
 import 'package:cafeapp/src/theme/app_style.dart';
 import 'package:cafeapp/src/ui/food/foods_screen.dart';
-import 'package:cafeapp/src/ui/main/home/room/room_screen.dart';
+import 'package:cafeapp/src/ui/main/order/order_screen.dart';
+import 'package:cafeapp/src/utils/utils.dart';
 import 'package:cafeapp/src/widget/button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -69,184 +70,103 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
           borderRadius: BorderRadius.circular(20),
         ),
       ),
-
       body: Column(
         children: [
           Expanded(
             child: Padding(
-              padding:  EdgeInsets.only(left: 8.sp,right: 8.sp,top: 94.sp),
-              child: TabBarView(
-                  controller: _tabController,
-                  children: [
-                    GridView.builder(
-                      itemCount: 8,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        crossAxisSpacing: 12.w,
-                        mainAxisSpacing: 12.h,
-                        childAspectRatio: 0.85,
+              padding: EdgeInsets.only(left: 8.sp, right: 8.sp, top: 94.sp),
+              child: StreamBuilder(
+                stream: hallCategoryAndPlaceBloc.getHallCategoryStream,
+                builder: (context, asyncSnapshot) {
+                  if (asyncSnapshot.hasData) {
+                    var categories = asyncSnapshot.data!;
+                    return TabBarView(
+                      controller: _tabController,
+                      children: List.generate(
+                        categories.hallCategoryModel.length,
+                            (tabIndex) {
+                          return GridView.builder(
+                            itemCount: categories.placeModel.length,
+                            gridDelegate:
+                            SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                              crossAxisSpacing: 12.w,
+                              mainAxisSpacing: 12.h,
+                              childAspectRatio: 0.85,
+                            ),
+                            itemBuilder: (context, index) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(context, MaterialPageRoute(builder: (builder){
+                                      return OrderScreen(data: categories.placeModel[index],);
+                                    }));
+                                  },
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      color: AppColors.inputColor,
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                            alignment: Alignment.center,
+                                            height: 70,
+                                            child: Image.asset("assets/images/room.png",color: AppColors.grey,)),
+                                        Center(
+                                          child: Text(
+                                            categories.placeModel[index].name,
+                                            style:
+                                            AppStyle.font800(AppColors.white),
+                                          ),
+                                        ),
+                                        Spacer(),
+                                        categories.placeModel[index].lastOrder.totalSumma ==0?SizedBox():Container(
+                                          decoration: BoxDecoration(
+                                            color: AppColors.background,
+                                            borderRadius: BorderRadius.only(
+                                              bottomLeft: Radius.circular(5),
+                                              topRight: Radius.circular(10),
+                                            ),
+                                          ),
+                                          margin: EdgeInsets.only(top: 8.sp),
+                                          padding: EdgeInsets.all(7.sp),
+                                          child:Text(
+                                            Utils.formatNumber(categories.placeModel[index].lastOrder.totalSumma),
+                                            style: AppStyle.font800(
+                                                AppColors.buttonColor),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                            },
+                          );
+                        },
                       ),
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: (){
-                            BottomDialog.showBottomOrderDialog(context);
-                          },
-                          child: Container(
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: AppColors.inputColor,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  height: 70,
-                                  width: double.infinity,
-                                  child: Image.asset("assets/images/chair.png",color: AppColors.grey,),
-                                ),
-                                SizedBox(height: 8.sp,),
-                                Center(
-                                  child: Text("Zal ${index + 1}",
-                                      style: AppStyle.font600(AppColors.white)),
-                                ),
-                                Spacer(),
-                                Container(
-                                  decoration: BoxDecoration(
-                                      color: AppColors.background,
-                                      borderRadius: BorderRadius.only(
-                                          bottomLeft: Radius.circular(5),
-                                          topRight: Radius.circular(10)
-                                      )
-                                  ),
-                                  margin: EdgeInsets.only(top: 8.sp),
-                                  padding: EdgeInsets.all(7.sp),
-                                  child: Text(
-                                    "56 000 so'm",
-                                    style: AppStyle.font400Bold(AppColors.green),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                    GridView.builder(
-                      itemCount: 8,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        crossAxisSpacing: 12.w,
-                        mainAxisSpacing: 12.h,
-                        childAspectRatio: 0.85,
+                    );
+                  } else {
+                    return Center(
+                      child: CircularProgressIndicator.adaptive(
+                        backgroundColor: AppColors.buttonColor,
                       ),
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: (){
-                            BottomDialog.showBottomOrderDialog(context);
-                          },
-                          child: Container(
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: AppColors.inputColor,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  height: 70,
-                                  width: double.infinity,
-                                  child: Image.asset("assets/images/room.png",color: AppColors.grey,),
-                                ),
-                                SizedBox(height: 8.sp,),
-                                Center(
-                                  child: Text("Zal ${index + 1}",
-                                      style: AppStyle.font600(AppColors.white)),
-                                ),
-                                Spacer(),
-                                Container(
-                                  decoration: BoxDecoration(
-                                      color: AppColors.background,
-                                      borderRadius: BorderRadius.only(
-                                          bottomLeft: Radius.circular(5),
-                                          topRight: Radius.circular(10)
-                                      )
-                                  ),
-                                  margin: EdgeInsets.only(top: 8.sp),
-                                  padding: EdgeInsets.all(7.sp),
-                                  child: Text(
-                                    "56 000 so'm",
-                                    style: AppStyle.font400Bold(AppColors.green),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                    GridView.builder(
-                      itemCount: 8,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        crossAxisSpacing: 12.w,
-                        mainAxisSpacing: 12.h,
-                        childAspectRatio: 0.85,
-                      ),
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: (){
-                            BottomDialog.showBottomOrderDialog(context);
-                          },
-                          child: Container(
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: AppColors.inputColor,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  height: 70,
-                                  width: double.infinity,
-                                  child: Image.asset("assets/images/chair.png",color: AppColors.grey,),
-                                ),
-                                SizedBox(height: 8.sp,),
-                                Center(
-                                  child: Text("Zal ${index + 1}",
-                                      style: AppStyle.font600(AppColors.white)),
-                                ),
-                                Spacer(),
-                                Container(
-                                  decoration: BoxDecoration(
-                                      color: AppColors.background,
-                                      borderRadius: BorderRadius.only(
-                                          bottomLeft: Radius.circular(5),
-                                          topRight: Radius.circular(10)
-                                      )
-                                  ),
-                                  margin: EdgeInsets.only(top: 8.sp),
-                                  padding: EdgeInsets.all(7.sp),
-                                  child: Text(
-                                    "56 000 so'm",
-                                    style: AppStyle.font400Bold(AppColors.green),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ]),
+                    );
+                  }
+                },
+              ),
             ),
           ),
-          ButtonWidget(text: "Yangi buyurtma", textColor: AppColors.white, backgroundColor: AppColors.buttonColor, onTap: (){})
+
+          // ButtonWidget(
+          //   text: "Yangi buyurtma",
+          //   textColor: AppColors.white,
+          //   backgroundColor: AppColors.buttonColor,
+          //   onTap: () {},
+          // )
         ],
       ),
-
       floatingActionButtonLocation: FloatingActionButtonLocation.centerTop,
       floatingActionButton: Container(
         padding: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
@@ -257,7 +177,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
             color: AppColors.inputColor),
         margin: EdgeInsets.only(left: 16.sp,right: 16.sp,top: 84.sp),
         child: StreamBuilder(
-            stream: hallCategoryBloc.getHallCategoryStream,
+            stream: hallCategoryAndPlaceBloc.getHallCategoryStream,
             builder: (context, asyncSnapshot) {
               if(asyncSnapshot.hasData){
                 var data = asyncSnapshot.data!;
@@ -273,12 +193,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                     dividerColor: Colors.transparent,
                     unselectedLabelColor: AppColors.grey,
                     controller: _tabController,
-                    tabs: data.map((halls){
+                    tabs: data.hallCategoryModel.map((halls){
                       return Text(halls.name);
                     }).toList()
                 );
               }else{
-                hallCategoryBloc.getHallCategory();
+                hallCategoryAndPlaceBloc.getHallCategoryAndPlace();
                 return CircularProgressIndicator.adaptive(backgroundColor: AppColors.buttonColor,);
               }
             }

@@ -8,7 +8,7 @@ class PlaceModel {
   int hallId;
   String hallName;
   LastOrder lastOrder;
-  int placePrice;
+  num placePrice;
   String placePriceType;
 
   PlaceModel({
@@ -28,7 +28,7 @@ class PlaceModel {
     id: json["id"]??0,
     hallId: json["hall_id"]??0,
     hallName: json["hall_name"]??"",
-    lastOrder: LastOrder.fromJson(json["last_order"]),
+    lastOrder: json["last_order"] == null?LastOrder.fromJson({}):LastOrder.fromJson(json["last_order"]),
     placePrice: json["place_price"]??0,
     placePriceType: json["place_price_type"]??"",
   );
@@ -43,7 +43,7 @@ class LastOrder {
   int waiterId;
   String waiterFirstName;
   String waiterLastName;
-  int totalSumma;
+  num totalSumma;
 
   LastOrder({
     required this.id,

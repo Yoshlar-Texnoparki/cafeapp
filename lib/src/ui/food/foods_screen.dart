@@ -1,6 +1,5 @@
 import 'package:cafeapp/src/theme/app_colors.dart';
 import 'package:cafeapp/src/theme/app_style.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -28,60 +27,45 @@ class _FoodsScreenState extends State<FoodsScreen>
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: Container(
-          width: MediaQuery.of(context).size.width,
-          height: 40.sp,
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
-          child: Row(
-            children: [
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: 40.sp,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-              ),
-            ],
-          ),
-        ),
-        automaticallyImplyLeading: false,
+        foregroundColor: AppColors.white,
+        title: Text("3 Stol"),
         shape: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
         surfaceTintColor: Colors.transparent,
         backgroundColor: AppColors.inputColor,
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(30.sp),
-          child: Padding(
-            padding: EdgeInsets.only(left: 8.0.sp, right: 8.sp),
-            child: TabBar.secondary(
-              padding: EdgeInsets.only(bottom: 10),
-              labelColor: AppColors.black,
-              indicatorPadding: EdgeInsets.zero,
-              tabAlignment: TabAlignment.start,
-              overlayColor: MaterialStateProperty.all<Color>(
-                Colors.transparent,
-              ),
-              labelPadding: EdgeInsets.symmetric(
-                vertical: 12.sp,
-                horizontal: 12.sp,
-              ),
-              dividerColor: Colors.transparent,
-              unselectedLabelColor: AppColors.grey,
-              indicatorSize: TabBarIndicatorSize.tab,
-              indicator: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: AppColors.buttonColor,
-              ),
-              isScrollable: true,
-              controller: _tabController,
-              tabs: [
-                Text("Milly taomlar"),
-                Text("Uygur taomlar"),
-                Text("Fast fodlar taomlar"),
-                Text("Oshlar"),
-              ],
-            ),
-          ),
-        ),
+        // bottom: PreferredSize(
+        //   preferredSize: Size.fromHeight(30.sp),
+        //   child: Padding(
+        //     padding: EdgeInsets.only(left: 8.0.sp, right: 8.sp),
+        //     child: TabBar.secondary(
+        //       padding: EdgeInsets.only(bottom: 10),
+        //       labelColor: AppColors.black,
+        //       indicatorPadding: EdgeInsets.zero,
+        //       tabAlignment: TabAlignment.start,
+        //       overlayColor: MaterialStateProperty.all<Color>(
+        //         Colors.transparent,
+        //       ),
+        //       labelPadding: EdgeInsets.symmetric(
+        //         vertical: 12.sp,
+        //         horizontal: 12.sp,
+        //       ),
+        //       dividerColor: Colors.transparent,
+        //       unselectedLabelColor: AppColors.grey,
+        //       indicatorSize: TabBarIndicatorSize.tab,
+        //       indicator: BoxDecoration(
+        //         borderRadius: BorderRadius.circular(20),
+        //         color: AppColors.buttonColor,
+        //       ),
+        //       isScrollable: true,
+        //       controller: _tabController,
+        //       tabs: [
+        //         Text("Milly taomlar"),
+        //         Text("Uygur taomlar"),
+        //         Text("Fast fodlar taomlar"),
+        //         Text("Oshlar"),
+        //       ],
+        //     ),
+        //   ),
+        // ),
       ),
       body: TabBarView(
         controller: _tabController,
