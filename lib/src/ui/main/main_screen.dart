@@ -2,6 +2,7 @@ import 'package:cafeapp/src/theme/app_colors.dart';
 import 'package:cafeapp/src/ui/main/home/home_screen.dart';
 import 'package:flutter/material.dart';
 
+
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
@@ -10,6 +11,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  @override
   int _selectedIndex = 0;
   List<Widget> screens= [
     HomeScreen(),

@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Cafe App',
           theme: ThemeData(
+            platform: TargetPlatform.iOS,
             primarySwatch: Colors.orange,
             textTheme: Typography.englishLike2018.apply(fontSizeFactor: 1.sp),
           ),

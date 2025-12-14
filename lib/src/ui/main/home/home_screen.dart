@@ -9,6 +9,8 @@ import 'package:cafeapp/src/utils/utils.dart';
 import 'package:cafeapp/src/widget/button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:web_socket/web_socket.dart';
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -130,8 +132,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                                               topRight: Radius.circular(10),
                                             ),
                                           ),
-                                          margin: EdgeInsets.only(top: 8.sp),
-                                          padding: EdgeInsets.all(7.sp),
+                                          margin: EdgeInsets.only(top: 8.h),
+                                          padding: EdgeInsets.all(7.w),
                                           child:Text(
                                             Utils.formatNumber(categories.placeModel[index].lastOrder.totalSumma),
                                             style: AppStyle.font800(
@@ -167,15 +169,33 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
           // )
         ],
       ),
+      // floatingActionButton: FloatingActionButton(onPressed: ()async{
+      //   final socket =
+      //   await WebSocket.connect(Uri.parse('wss://cafe.geeks-soft.uz/ws/api/places?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ4b2RpbTEiLCJleHAiOjE3NjU3OTAyNzl9.fvhjjy2TaeNp38QTpx4IbJdFLsdjnPMhSXo6snb0Oj0'));
+      //
+      //   socket.events.listen((e) async {
+      //     switch (e) {
+      //       case TextDataReceived(text: final text):
+      //         print('Received Text: $text');
+      //         await socket.close();
+      //       case BinaryDataReceived(data: final data):
+      //         print('Received Binary: $data');
+      //       case CloseReceived(code: final code, reason: final reason):
+      //         print('Connection to server closed: $code [$reason]');
+      //     }
+      //   });
+      //
+      //   socket.sendText('Hello Dart WebSockets! 🎉');
+      // },child: Icon(Icons.add),),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerTop,
       floatingActionButton: Container(
-        padding: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
-        height: 60.spMin,
+        padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 4.w),
+        height: 60.h,
         decoration: BoxDecoration(
             border: Border.all(color: AppColors.grey.withOpacity(0.3)),
             borderRadius: BorderRadius.circular(25),
             color: AppColors.inputColor),
-        margin: EdgeInsets.only(left: 16.sp,right: 16.sp,top: 84.sp),
+        margin: EdgeInsets.only(left: 16.w,right: 16.h,top: 84.h),
         child: StreamBuilder(
             stream: hallCategoryAndPlaceBloc.getHallCategoryStream,
             builder: (context, asyncSnapshot) {
@@ -184,7 +204,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin{
                 return TabBar.secondary(
                     isScrollable: true,
                     tabAlignment: TabAlignment.start,
-                    labelPadding: EdgeInsets.symmetric(vertical: 16.sp,horizontal: 42),
+                    labelPadding: EdgeInsets.symmetric(vertical: 16.h,horizontal: 42),
                     indicatorSize: TabBarIndicatorSize.tab,
                     indicator: BoxDecoration(
                       color: AppColors.buttonColor,
