@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:cafeapp/src/api/repository.dart';
 import 'package:cafeapp/src/bloc/order/order_bloc.dart';
+import 'package:cafeapp/src/dialog/center_dialog.dart';
+import 'package:cafeapp/src/model/http_result.dart';
 import 'package:cafeapp/src/model/place/place_model.dart';
 import 'package:cafeapp/src/theme/app_colors.dart';
 import 'package:cafeapp/src/theme/app_style.dart';
@@ -54,7 +58,7 @@ class _OrderScreenState extends State<OrderScreen> {
         backgroundColor: AppColors.buttonColor,
         color: AppColors.black,
         onRefresh: ()async{
-          orderDetailBloc.getAllOrderDetail(widget.data.hallId);
+          orderDetailBloc.getAllOrderDetail(widget.data.lastOrder.id);
         },
         child: StreamBuilder(
           stream: orderDetailBloc.getOrderDetailStream,
@@ -104,21 +108,39 @@ class _OrderScreenState extends State<OrderScreen> {
                                           Map updateOrder = {
                                             "place_id": data.id,
                                             "order_type": "waiter",
-                                            "items": [
+                                            "item":
                                               {
                                                 "food_id": data.items[index].foodId,
                                                 "weight_type": "pors", // pors yoki kg
                                                 "quantity": data.items[index].quantity-1,
                                                 "price": data.items[index].price
                                               }
-                                            ]
                                           };
-                                          _repository.addOrder(updateOrder);
+                                          _repository.updateOrder(json.encode(updateOrder),widget.data.id);
                                         }, icon: Icon(Icons.remove,color: AppColors.white,),hoverColor: AppColors.buttonColor,highlightColor: AppColors.buttonColor,),
                                         SizedBox(width: 8.sp,),
                                         Text(Utils.formatNumber(data.items[index].quantity),style: AppStyle.font500(AppColors.white),),
                                         SizedBox(width: 8.sp,),
-                                        IconButton(onPressed: (){}, icon: Icon(Icons.add,color: AppColors.white,)),
+                                        IconButton(onPressed: ()async{
+                                          Map updateOrder = {
+                                            "place_id": data.place.id,
+                                            "order_type": "waiter",
+                                            "delete": false,
+                                            "item":
+                                            {
+                                              "food_id": data.items[index].foodId,
+                                              "weight_type": "pors", // pors yoki kg
+                                              "quantity": data.items[index].quantity+1,
+                                              "price": data.items[index].price
+                                            }
+                                          };
+                                          HttpResult res = await _repository.updateOrder(json.encode(updateOrder),widget.data.lastOrder.id);
+                                          if(res.status >=200 && res.status<299){
+                                            orderDetailBloc.getAllOrderDetail(widget.data.lastOrder.id);
+                                          }else{
+                                            CenterDialog.showCenterDialog(ctx, res.result);
+                                          }
+                                        }, icon: Icon(Icons.add,color: AppColors.white,),hoverColor: AppColors.buttonColor,highlightColor: AppColors.buttonColor,),
                                       ],
                                     ),
                                   ),

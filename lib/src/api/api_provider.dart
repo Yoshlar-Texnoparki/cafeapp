@@ -254,6 +254,7 @@ class ApiProvider{
     String url = "${baseUrl}api/orders/";
     return await _postRequest(url,data);
   }
+
   Future<HttpResult> getAOrderId(int id)async{
     String url = "${baseUrl}api/orders/";
     if(id == 0){
@@ -263,8 +264,8 @@ class ApiProvider{
     }
     return await _getRequest(url);
   }
-  Future<HttpResult> updateOrder(data)async{
-    String url = "${baseUrl}api/orders/";
+  Future<HttpResult> updateOrder(data,id)async{
+    String url = "${baseUrl}api/orders/$id";
     return await _putRequest(url,data);
   }
 }

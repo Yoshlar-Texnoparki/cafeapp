@@ -11,6 +11,7 @@ class Repository{
   Future<HttpResult> categoriesId(int id)async => await _apiProvider.categoriesId(id);
   Future<HttpResult> foodDetail(int id)async => await _apiProvider.foodDetail(id);
   Future<HttpResult> addOrder(data)async => await _apiProvider.addOrder(data);
+  Future<HttpResult> updateOrder(data,id)async => await _apiProvider.updateOrder(data,id);
   Future<HttpResult> getAOrderId(int id)async => await _apiProvider.getAOrderId(id);
   Future<HttpResult> places()async => await _apiProvider.places();
 }
