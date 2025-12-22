@@ -104,7 +104,8 @@ class _OrderScreenState extends State<OrderScreen> {
                                     ),
                                     child: Row(
                                       children: [
-                                        IconButton(onPressed: (){
+                                        IconButton(onPressed: ()async{
+                                          CenterDialog.showLoadingDialog(context);
                                           Map updateOrder = {
                                             "place_id": data.id,
                                             "order_type": "waiter",
@@ -116,12 +117,23 @@ class _OrderScreenState extends State<OrderScreen> {
                                                 "price": data.items[index].price
                                               }
                                           };
-                                          _repository.updateOrder(json.encode(updateOrder),widget.data.id);
+                                          if(data.items[index].quantity==1){
+                                            Navigator.pop(context);
+
+                                          }
+                                          else{
+                                            HttpResult res = await _repository.updateOrder(json.encode(updateOrder),widget.data.lastOrder.id);
+                                            if(res.status >=200 && res.status<299){
+                                              orderDetailBloc.getAllOrderDetail(widget.data.lastOrder.id);
+                                              Navigator.pop(context);
+                                            }
+                                          }
                                         }, icon: Icon(Icons.remove,color: AppColors.white,),hoverColor: AppColors.buttonColor,highlightColor: AppColors.buttonColor,),
                                         SizedBox(width: 8.sp,),
                                         Text(Utils.formatNumber(data.items[index].quantity),style: AppStyle.font500(AppColors.white),),
                                         SizedBox(width: 8.sp,),
                                         IconButton(onPressed: ()async{
+                                          CenterDialog.showLoadingDialog(context);
                                           Map updateOrder = {
                                             "place_id": data.place.id,
                                             "order_type": "waiter",
@@ -137,6 +149,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                           HttpResult res = await _repository.updateOrder(json.encode(updateOrder),widget.data.lastOrder.id);
                                           if(res.status >=200 && res.status<299){
                                             orderDetailBloc.getAllOrderDetail(widget.data.lastOrder.id);
+                                            Navigator.pop(context);
                                           }else{
                                             CenterDialog.showCenterDialog(ctx, res.result);
                                           }
