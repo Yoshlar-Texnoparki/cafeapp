@@ -166,7 +166,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                     alignment: Alignment.center,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(15),
-                                      color: AppColors.inputColor,
+                                      color: filteredPlaces[index].lastOrder.isActive?Colors.redAccent.withOpacity(0.4):AppColors.green.withOpacity(0.4),
                                     ),
                                     child: Column(
                                       children: [
@@ -195,8 +195,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                           margin: EdgeInsets.only(top: 8.h),
                                           padding: EdgeInsets.all(7.w),
                                           child: Text(
-                                            Utils.formatNumber(
-                                                filteredPlaces[index].lastOrder.totalSumma),
+                                            Utils.formatNumber(filteredPlaces[index].lastOrder.totalSumma),
                                             style: AppStyle.font800(AppColors.buttonColor),
                                           ),
                                         ),
