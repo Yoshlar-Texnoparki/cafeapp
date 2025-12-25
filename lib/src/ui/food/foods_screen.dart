@@ -3,7 +3,6 @@ import 'package:cafeapp/src/theme/app_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../dialog/bottom_dialog.dart';
 
 class FoodsScreen extends StatefulWidget {
   const FoodsScreen({super.key});
@@ -32,101 +31,78 @@ class _FoodsScreenState extends State<FoodsScreen>
         shape: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
         surfaceTintColor: Colors.transparent,
         backgroundColor: AppColors.inputColor,
-        // bottom: PreferredSize(
-        //   preferredSize: Size.fromHeight(30.sp),
-        //   child: Padding(
-        //     padding: EdgeInsets.only(left: 8.0.sp, right: 8.sp),
-        //     child: TabBar.secondary(
-        //       padding: EdgeInsets.only(bottom: 10),
-        //       labelColor: AppColors.black,
-        //       indicatorPadding: EdgeInsets.zero,
-        //       tabAlignment: TabAlignment.start,
-        //       overlayColor: MaterialStateProperty.all<Color>(
-        //         Colors.transparent,
-        //       ),
-        //       labelPadding: EdgeInsets.symmetric(
-        //         vertical: 12.sp,
-        //         horizontal: 12.sp,
-        //       ),
-        //       dividerColor: Colors.transparent,
-        //       unselectedLabelColor: AppColors.grey,
-        //       indicatorSize: TabBarIndicatorSize.tab,
-        //       indicator: BoxDecoration(
-        //         borderRadius: BorderRadius.circular(20),
-        //         color: AppColors.buttonColor,
-        //       ),
-        //       isScrollable: true,
-        //       controller: _tabController,
-        //       tabs: [
-        //         Text("Milly taomlar"),
-        //         Text("Uygur taomlar"),
-        //         Text("Fast fodlar taomlar"),
-        //         Text("Oshlar"),
-        //       ],
-        //     ),
-        //   ),
-        // ),
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(30.sp),
+          child: Padding(
+            padding: EdgeInsets.only(left: 8.0.sp, right: 8.sp),
+            child: TabBar.secondary(
+              padding: EdgeInsets.only(bottom: 10),
+              labelColor: AppColors.black,
+              indicatorPadding: EdgeInsets.zero,
+              tabAlignment: TabAlignment.start,
+              overlayColor: MaterialStateProperty.all<Color>(
+                Colors.transparent,
+              ),
+              labelPadding: EdgeInsets.symmetric(
+                vertical: 12.sp,
+                horizontal: 12.sp,
+              ),
+              dividerColor: Colors.transparent,
+              unselectedLabelColor: AppColors.grey,
+              indicatorSize: TabBarIndicatorSize.tab,
+              indicator: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: AppColors.buttonColor,
+              ),
+              isScrollable: true,
+              controller: _tabController,
+              tabs: [
+                Text("Milly taomlar"),
+                Text("Uygur taomlar"),
+                Text("Fast fodlar taomlar"),
+                Text("Oshlar"),
+              ],
+            ),
+          ),
+        ),
       ),
       body: TabBarView(
         controller: _tabController,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: GridView.builder(
-              itemCount: 8,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                crossAxisSpacing: 12.w,
-                mainAxisSpacing: 12.h,
-                childAspectRatio: 0.85,
+          ListView.builder(itemCount: 10,itemBuilder: (itemBuilder,index){
+            return Container(
+              padding: EdgeInsets.all(4.r),
+              width:1.sw,
+              margin: EdgeInsets.symmetric(horizontal: 16,vertical: 8),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: AppColors.inputColor
               ),
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {
-                    // BottomDialog.showBottomOrderDialog(context);
-                  },
-                  child: Container(
-                    alignment: Alignment.center,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 70.r,
+                    height: 70.r,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: AppColors.inputColor,
+                      borderRadius: BorderRadius.circular(10),
+                      color: AppColors.inputColor
                     ),
-                    child: Column(
-                      children: [
-                        Container(
-                          width: double.infinity,
-                          height: 75.sp,
-                          decoration: BoxDecoration(
-                            color: AppColors.inputColor,
-                            borderRadius: BorderRadius.vertical(
-                              bottom: Radius.circular(0),
-                              top: Radius.circular(15),
-                            ),
-                          ),
-                          child: Icon(
-                            Icons.fastfood_sharp,
-                            size: 44,
-                            color: AppColors.background,
-                          ),
-                        ),
-                        SizedBox(height: 2.sp),
-                        Text(
-                          "Polvon shashlik assorti",
-                          textAlign: TextAlign.center,
-                          style: AppStyle.font400Bold(AppColors.white),
-                        ),
-                        SizedBox(height: 2.sp),
-                        Text(
-                          "73 200 so'm",
-                          style: AppStyle.font400Bold(AppColors.green),
-                        ),
-                      ],
-                    ),
+                    child: Icon(Icons.fastfood_sharp,size: 34,color: AppColors.grey,),
                   ),
-                );
-              },
-            ),
-          ),
+                  Expanded(child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Uygur lagmon",style: AppStyle.font800(AppColors.white),),
+                      SizedBox(height: 8,),
+                      Text("89 000 000 so'm",style: AppStyle.font800(AppColors.buttonColor),),
+                    ],
+                  ))
+                ],
+              ),
+            );
+          }),
           Text("data"),
           Text("data"),
           Text("data"),

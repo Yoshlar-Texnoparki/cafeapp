@@ -7,6 +7,7 @@ import 'package:cafeapp/src/model/http_result.dart';
 import 'package:cafeapp/src/model/place/place_model.dart';
 import 'package:cafeapp/src/theme/app_colors.dart';
 import 'package:cafeapp/src/theme/app_style.dart';
+import 'package:cafeapp/src/ui/food/foods_screen.dart';
 import 'package:cafeapp/src/utils/utils.dart';
 import 'package:cafeapp/src/widget/food_card_widget.dart';
 import 'package:flutter/material.dart';
@@ -176,7 +177,11 @@ class _OrderScreenState extends State<OrderScreen> {
         label: Text('Taom qo\'shish',style: AppStyle.font600(AppColors.black),),
         icon: Icon(Icons.add,color: AppColors.black,),
         backgroundColor: AppColors.buttonColor,
-        onPressed: (){}),
+        onPressed: (){
+          Navigator.push(context, MaterialPageRoute(builder: (builder){
+            return FoodsScreen();
+          }));
+        }),
     );
   }
 }

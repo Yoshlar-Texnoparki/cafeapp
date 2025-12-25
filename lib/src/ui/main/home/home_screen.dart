@@ -166,7 +166,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                     alignment: Alignment.center,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(15),
-                                      color: filteredPlaces[index].lastOrder.isActive?Colors.redAccent.withOpacity(0.4):AppColors.green.withOpacity(0.4),
+                                      color: filteredPlaces[index].lastOrder.isActive?Colors.redAccent.withOpacity(0.4):AppColors.green.withOpacity(0.2),
                                     ),
                                     child: Column(
                                       children: [
