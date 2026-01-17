@@ -2,7 +2,6 @@ import 'package:cafeapp/src/theme/app_colors.dart';
 import 'package:cafeapp/src/ui/main/home/home_screen.dart';
 import 'package:flutter/material.dart';
 
-
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
@@ -11,13 +10,8 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  @override
   int _selectedIndex = 0;
-  List<Widget> screens= [
-    HomeScreen(),
-    Container(),
-    Container(),
-  ];
+  List<Widget> screens = [HomeScreen(), Container()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,17 +23,20 @@ class _MainScreenState extends State<MainScreen> {
           selectedItemColor: AppColors.buttonColor,
           unselectedItemColor: AppColors.grey,
           currentIndex: _selectedIndex,
-          onTap: (i){
+          onTap: (i) {
             _selectedIndex = i;
-            setState(() {
-            });
+            setState(() {});
           },
           backgroundColor: AppColors.inputColor,
-            items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home),label: 'Asosiy'),
-          BottomNavigationBarItem(icon: Icon(Icons.cookie),label: 'Taomlar'),
-          BottomNavigationBarItem(icon: Icon(Icons.receipt),label: 'Cheklar'),
-        ]),
+          items: [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Asosiy'),
+            // BottomNavigationBarItem(icon: Icon(Icons.cookie), label: 'Taomlar'),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.receipt),
+              label: 'Cheklar',
+            ),
+          ],
+        ),
       ),
     );
   }

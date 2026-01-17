@@ -3,24 +3,28 @@ import 'package:cafeapp/src/model/http_result.dart';
 import 'package:cafeapp/src/model/order/order_detail.dart';
 import 'package:rxdart/rxdart.dart';
 
-class OrderDetailBloc{
+class OrderDetailBloc {
   final Repository _repository = Repository();
-  final _fetchOrderDetailSubject = BehaviorSubject<OrderDetailModel>();
-  Stream<OrderDetailModel> get getOrderDetailStream => _fetchOrderDetailSubject.stream;
+  final _fetchOrderDetailSubject = PublishSubject<OrderDetailModel>();
+  Stream<OrderDetailModel> get getOrderDetailStream =>
+      _fetchOrderDetailSubject.stream;
 
-
-  getAllOrderDetail(id)async{
+  getAllOrderDetail(id) async {
     HttpResult result = await _repository.getAOrderId(id);
-    if(result.isSuccess){
-      try{
+    if (result.isSuccess) {
+      try {
         var data = OrderDetailModel.fromJson(result.result);
         _fetchOrderDetailSubject.sink.add(data);
-      }catch(e){
+      } catch (e) {
         // _fetchOrderDetailSubject.close();
         // _fetchOrderDetailSubject.sink.add(OrderDetailModel.fromJson({}));
         print(e);
       }
     }
+  }
+
+  Future<HttpResult> postOrder(Map<String, dynamic> data) async {
+    return await _repository.addOrder(data);
   }
 }
 
