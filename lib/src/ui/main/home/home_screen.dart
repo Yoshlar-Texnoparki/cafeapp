@@ -268,6 +268,32 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         );
                       }
 
+                      if (_showOnlyMyTables) {
+                        final allMyPlaces = categories.placeModel.where((
+                          place,
+                        ) {
+                          return place.lastOrder.waiterId ==
+                              CacheService.getUserId();
+                        }).toList();
+
+                        return Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 4.w),
+                          child: GridView.builder(
+                            itemCount: allMyPlaces.length,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 3,
+                                  crossAxisSpacing: 12.w,
+                                  mainAxisSpacing: 12.h,
+                                  childAspectRatio: 0.85,
+                                ),
+                            itemBuilder: (context, index) {
+                              return _buildTableCard(allMyPlaces[index], index);
+                            },
+                          ),
+                        );
+                      }
+
                       return TabBarView(
                         controller: _tabController,
                         children: List.generate(
@@ -278,14 +304,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             final filteredPlaces = categories.placeModel.where((
                               place,
                             ) {
-                              bool isInCategory =
-                                  place.hallId == currentCategory.id;
-                              if (_showOnlyMyTables) {
-                                return isInCategory &&
-                                    place.lastOrder.waiterId ==
-                                        CacheService.getUserId();
-                              }
-                              return isInCategory;
+                              return place.hallId == currentCategory.id;
                             }).toList();
 
                             return Padding(
@@ -341,6 +360,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             builder: (context, asyncSnapshot) {
               if (asyncSnapshot.hasData) {
                 var data = asyncSnapshot.data!;
+                if (_showOnlyMyTables) {
+                  return Center(
+                    child: Text(
+                      "Mening zakazlarim",
+                      style: AppStyle.font800(
+                        AppColors.buttonColor,
+                      ).copyWith(fontSize: 14.sp),
+                    ),
+                  );
+                }
                 return TabBar.secondary(
                   isScrollable: true,
                   tabAlignment: TabAlignment.start,

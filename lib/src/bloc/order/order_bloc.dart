@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:cafeapp/src/api/repository.dart';
 import 'package:cafeapp/src/model/http_result.dart';
 import 'package:cafeapp/src/model/order/order_detail.dart';
@@ -50,6 +51,10 @@ class OrderDetailBloc {
 
   Future<HttpResult> postOrder(Map<String, dynamic> data) async {
     return await _repository.addOrder(data);
+  }
+
+  Future<HttpResult> updateOrder(Map<String, dynamic> data, int id) async {
+    return await _repository.updateOrder(json.encode(data), id);
   }
 }
 

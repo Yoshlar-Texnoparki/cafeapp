@@ -25,7 +25,7 @@ class CenterDialog{
       context: ctx,
       builder: (ctx) {
         return AlertDialog(
-          backgroundColor: AppColors.white,
+          backgroundColor: AppColors.background,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           title: Center(
             child: Text(

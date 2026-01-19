@@ -329,6 +329,7 @@ class _OrderScreenState extends State<OrderScreen> {
                 return FoodsScreen(
                   placeId: widget.data.id,
                   placeName: widget.data.name,
+                  orderId: widget.data.lastOrder.id,
                 );
               },
             ),

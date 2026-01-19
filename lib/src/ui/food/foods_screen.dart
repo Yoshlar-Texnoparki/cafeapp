@@ -1,6 +1,7 @@
 import 'package:cafeapp/src/bloc/food/categories_bloc.dart';
 import 'package:cafeapp/src/bloc/food/food_bloc.dart';
 import 'package:cafeapp/src/bloc/order/order_bloc.dart'; // Make sure this exports OrderDetailBloc or similar
+import 'package:cafeapp/src/model/http_result.dart';
 import 'package:cafeapp/src/model/food/categories_model.dart';
 import 'package:cafeapp/src/model/food/food_model.dart';
 import 'package:cafeapp/src/theme/app_colors.dart';
@@ -13,10 +14,12 @@ import 'package:rxdart/rxdart.dart';
 class FoodsScreen extends StatefulWidget {
   final int placeId;
   final String placeName;
+  final int orderId;
   const FoodsScreen({
     super.key,
     required this.placeId,
     required this.placeName,
+    this.orderId = 0,
   });
 
   @override
@@ -672,9 +675,15 @@ class _FoodsScreenState extends State<FoodsScreen> {
                           "items": items,
                         };
 
-                        final result = await orderDetailBloc.postOrder(
-                          orderData,
-                        );
+                        final HttpResult result;
+                        if (widget.orderId > 0) {
+                          result = await orderDetailBloc.updateOrder(
+                            orderData,
+                            widget.orderId,
+                          );
+                        } else {
+                          result = await orderDetailBloc.postOrder(orderData);
+                        }
 
                         setState(() => _isOrdering = false);
 
@@ -692,7 +701,9 @@ class _FoodsScreenState extends State<FoodsScreen> {
                           );
                           Navigator.pop(context);
                           orderDetailBloc.getAllOrderDetail(
-                            result.result['id'],
+                            widget.orderId > 0
+                                ? widget.orderId
+                                : result.result['id'],
                           );
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
