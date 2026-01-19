@@ -6,8 +6,13 @@ import 'package:rxdart/rxdart.dart';
 class OrderDetailBloc {
   final Repository _repository = Repository();
   final _fetchOrderDetailSubject = PublishSubject<OrderDetailModel>();
+  final _fetchOrderHistorySubject = PublishSubject<List<OrderDetailModel>>();
+
   Stream<OrderDetailModel> get getOrderDetailStream =>
       _fetchOrderDetailSubject.stream;
+
+  Stream<List<OrderDetailModel>> get getOrderHistoryStream =>
+      _fetchOrderHistorySubject.stream;
 
   getAllOrderDetail(id) async {
     HttpResult result = await _repository.getAOrderId(id);
@@ -20,6 +25,26 @@ class OrderDetailBloc {
         // _fetchOrderDetailSubject.sink.add(OrderDetailModel.fromJson({}));
         print(e);
       }
+    }
+  }
+
+  getAllOrders() async {
+    HttpResult result = await _repository.getAOrderId(0);
+    if (result.isSuccess) {
+      try {
+        List<OrderDetailModel> orders = [];
+        if (result.result is List) {
+          orders = (result.result as List)
+              .map((item) => OrderDetailModel.fromJson(item))
+              .toList();
+        }
+        _fetchOrderHistorySubject.sink.add(orders);
+      } catch (e) {
+        print('Error parsing order history: $e');
+        _fetchOrderHistorySubject.sink.add([]);
+      }
+    } else {
+      _fetchOrderHistorySubject.sink.add([]);
     }
   }
 

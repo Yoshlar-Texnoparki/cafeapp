@@ -34,19 +34,8 @@ class _LoginScreenState extends State<LoginScreen> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    SizedBox(height: 106.sp,),
-                    Center(
-                      child: Container(
-                        width: 120.sp,
-                        height: 120.sp,
-                        decoration: BoxDecoration(
-                            color: AppColors.inputColor,
-                            borderRadius: BorderRadius.circular(10)
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 16.sp,),
-                    Text("Kitchen",style: AppStyle.font800(AppColors.white),),
+                    SizedBox(height: 136.sp,),
+                    Text("Zelly",style: AppStyle.heading1(AppColors.buttonColor),),
                     SizedBox(height: 106.sp,),
                     TextField(
                       style: AppStyle.font500(AppColors.white),

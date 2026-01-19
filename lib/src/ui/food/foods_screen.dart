@@ -13,7 +13,11 @@ import 'package:rxdart/rxdart.dart';
 class FoodsScreen extends StatefulWidget {
   final int placeId;
   final String placeName;
-  const FoodsScreen({super.key, required this.placeId, required this.placeName});
+  const FoodsScreen({
+    super.key,
+    required this.placeId,
+    required this.placeName,
+  });
 
   @override
   State<FoodsScreen> createState() => _FoodsScreenState();
@@ -163,8 +167,6 @@ class _FoodsScreenState extends State<FoodsScreen> {
                   _itemWeightTypes[food.id] ??
                   (food.weightType == 'kg' ? 'kg' : 'pors');
               double currentQty = _selectedQuantities[food.id] ?? 1.0;
-              final TextEditingController kgController = TextEditingController(
-              );
 
               return Container(
                 decoration: BoxDecoration(
@@ -215,39 +217,60 @@ class _FoodsScreenState extends State<FoodsScreen> {
                     ),
                     SizedBox(height: 20.h),
                     if (selectedType == 'kg')
-                      TextField(
-                        controller: kgController,
-                        style: AppStyle.font800(
-                          AppColors.white,
-                        ).copyWith(fontSize: 24.sp),
-                        textAlign: TextAlign.center,
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: AppColors.inputColor,
-                          hintText: "Og'irlikni kiriting (kg)",
-                          hintStyle: AppStyle.font400(AppColors.grey),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              if (currentQty > 0.1) {
+                                setModalState(() {
+                                  currentQty = double.parse(
+                                    (currentQty - 0.1).toStringAsFixed(1),
+                                  );
+                                });
+                                _updateQuantity(food.id, -0.1, type: 'kg');
+                              } else {
+                                setModalState(() {
+                                  currentQty = 0;
+                                });
+                                _updateQuantity(
+                                  food.id,
+                                  -currentQty,
+                                  type: 'kg',
+                                );
+                              }
+                            },
+                            icon: Icon(
+                              Icons.remove_circle_outline,
                               color: AppColors.buttonColor,
+                              size: 30.sp,
                             ),
                           ),
-                        ),
-                        onChanged: (value) {
-                          double? val = double.parse(value);
-                          if (val != null) {
-                            setModalState(() {
-                              currentQty = val;
-                            });
-                            setState(() {
-                              _selectedQuantities[food.id] = val;
-                              _itemWeightTypes[food.id] = 'kg';
-                            });
-                          }
-                        },
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 20.w),
+                            child: Text(
+                              currentQty.toStringAsFixed(1),
+                              style: AppStyle.font800(
+                                AppColors.white,
+                              ).copyWith(fontSize: 24.sp),
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              setModalState(() {
+                                currentQty = double.parse(
+                                  (currentQty + 0.1).toStringAsFixed(1),
+                                );
+                              });
+                              _updateQuantity(food.id, 0.1, type: 'kg');
+                            },
+                            icon: Icon(
+                              Icons.add_circle_outline,
+                              color: AppColors.buttonColor,
+                              size: 30.sp,
+                            ),
+                          ),
+                        ],
                       )
                     else
                       Row(
@@ -668,7 +691,9 @@ class _FoodsScreenState extends State<FoodsScreen> {
                             ),
                           );
                           Navigator.pop(context);
-                          orderDetailBloc.getAllOrderDetail(result.result['id']);
+                          orderDetailBloc.getAllOrderDetail(
+                            result.result['id'],
+                          );
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
